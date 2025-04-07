@@ -2,10 +2,10 @@ package com.example.cs4084_group_13;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -22,7 +22,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "Create table " + TABLE_NAME + " ("
-        +ID_COL + "Integer Primary Key AUTOINCREMENT, "
+        +ID_COL + " Integer Primary Key AUTOINCREMENT, "
         + COL_1 + " Text";
     }
 
@@ -38,6 +38,20 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COL_1, name);
         db.insert(TABLE_NAME,null,values);
     }
-    
+
+    public ArrayList<Collections> getCollections() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Collections> collecs = new ArrayList<>();
+        Cursor cursor =db.rawQuery("Select * from " + TABLE_NAME,null);
+        if (cursor.moveToFirst()) {
+            do {
+                collecs.add(new Collections(cursor.getString(1)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return collecs;
+    }
+
 
 }
