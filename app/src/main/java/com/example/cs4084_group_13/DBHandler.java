@@ -23,7 +23,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = "Create table " + TABLE_NAME + " ("
         +ID_COL + " Integer Primary Key AUTOINCREMENT, "
-        + COL_1 + " Text";
+        + COL_1 + " Text)";
+        db.execSQL(query);
     }
 
     @Override
@@ -52,6 +53,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return collecs;
     }
+
+    public String getCollectionsTest() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Collections> collecs = new ArrayList<>();
+        Cursor cursor =db.rawQuery("Select * from " + TABLE_NAME,null);
+        if (cursor.moveToFirst()) {
+            do {
+                collecs.add(new Collections(cursor.getString(1)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return collecs.get(0).toString();
+    }
+
 
 
 }
