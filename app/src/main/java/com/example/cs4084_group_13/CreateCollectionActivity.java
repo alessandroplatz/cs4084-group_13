@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,22 +25,15 @@ public class CreateCollectionActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            Button subButton = findViewById(R.id.B1);
-            EditText name = findViewById(R.id.ET1);
+            TextView nameTitle = findViewById(R.id.TitleET);
+            EditText name = findViewById(R.id.enterNameInput);
+            Button subButton = findViewById(R.id.add_button);
 
             subButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String collectionName = name.getText().toString();
-                    if (!collectionName.isEmpty()) {
-                        DBHandler db1 = new DBHandler(CreateCollectionActivity.this);
-                        db1.add(collectionName);
-                        String test = db1.getCollectionsTest();
-
-                    }
-                    Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
-                    startActivity(intent);
-
+                    DBHandler myDB = new DBHandler(CreateCollectionActivity.this);
+                    myDB.addCollection(name.getText().toString().trim());
                 }
             });
 
