@@ -12,14 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHolder> {
+    private final RecyclerViewInterface recyclerViewInterface;
 
     private Context context;
     private ArrayList<String> names,ids;
 
-    public CustomAdaptor(Context context,ArrayList<String>ids,ArrayList<String>names) {
+    public CustomAdaptor(Context context,ArrayList<String>ids,ArrayList<String>names,
+                         RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.ids = ids;
         this.names = names;
+        this.recyclerViewInterface =recyclerViewInterface;
     }
 
     @NonNull
@@ -27,7 +30,7 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,recyclerViewInterface);
     }
 
     @Override
@@ -47,10 +50,23 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
 
          TextView collID,collName;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             collID = itemView.findViewById(R.id.collID);
             collName = itemView.findViewById(R.id.collName);
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface!= null){
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }

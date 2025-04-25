@@ -34,6 +34,8 @@ public class CreateCollectionActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     DBHandler myDB = new DBHandler(CreateCollectionActivity.this);
                     myDB.addCollection(name.getText().toString().trim());
+                    Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             });
 

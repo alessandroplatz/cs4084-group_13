@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context="MainActivity">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_collections_button"
+        android:foreground="@drawable/add_plus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:contentDescription="Add Collection Button"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="16dp"/>
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
@@ -23,15 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/add_collections_button"
-            android:foreground="@drawable/add_plus"
-            android:translationX="280dp"
-            android:translationY="600dp" />
-
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -42,6 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/tool_bar">
+
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

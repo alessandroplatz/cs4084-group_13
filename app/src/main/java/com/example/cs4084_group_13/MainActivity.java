@@ -2,6 +2,7 @@ package com.example.cs4084_group_13;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,29 +13,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewInterface{
 
     DBHandler db;
     ArrayList<String> names,ids;
     RecyclerView recyclerView;
     CustomAdaptor customAdaptor;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+
 
             recyclerView = findViewById(R.id.collGall);
             Button addButton = findViewById(R.id.button2);
+            RecyclerViewInterface recyclerViewInterface;
+
 
 
 
@@ -48,15 +52,22 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
+
             db = new DBHandler(MainActivity.this);
             names = new ArrayList<>();
             ids = new ArrayList<>();
             storeDataInArrays();
 
-            customAdaptor = new CustomAdaptor(MainActivity.this,ids,names);
+            customAdaptor = new CustomAdaptor(MainActivity.this,ids,names,this);
             recyclerView.setAdapter(customAdaptor);
-            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
 
+
+
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            addButton.bringToFront();
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
 
         });
@@ -77,4 +88,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(MainActivity.this, CreateCollectionActivity.class);
+        startActivity(intent);
+    }
 }
