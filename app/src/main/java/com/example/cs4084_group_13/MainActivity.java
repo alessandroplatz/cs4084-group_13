@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this, CreateCollectionActivity.class);
+        Intent intent = new Intent(MainActivity.this, FlashCardView.class);
         startActivity(intent);
     }
 }

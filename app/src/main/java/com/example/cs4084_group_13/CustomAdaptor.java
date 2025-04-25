@@ -35,7 +35,6 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CustomAdaptor.MyViewHolder holder, int position) {
-        holder.collID.setText(String.valueOf(ids.get(position)));
         holder.collName.setText(String.valueOf(names.get(position)));
 
 
@@ -48,11 +47,11 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-         TextView collID,collName;
+         TextView collName;
 
         public MyViewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
-            collID = itemView.findViewById(R.id.collID);
+
             collName = itemView.findViewById(R.id.collName);
             itemView.setOnClickListener(new View.OnClickListener(){
 

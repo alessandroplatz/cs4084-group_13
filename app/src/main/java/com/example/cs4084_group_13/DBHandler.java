@@ -42,12 +42,12 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
         //table 2
 
-        String query2 = "CREATE TABLE " + TABLE_NAME_2 + " (" +
-                ID_COL2 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_1_2 + " TEXT, " +
-                COL_2 + " TEXT, " +
-                ID_COL2 + " INTEGER, " +
-                "FOREIGN KEY(" + FK_Col + ") REFERENCES " + TABLE_NAME + "(" + ID_COL + "))";
+        String query2 = "Create table Flashcards(" +
+                "Flashcard_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Front Text," +
+                "Back Text," +
+                "Collection_ID INTEGER," +
+                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID))";
         db.execSQL(query2);
     }
 
@@ -102,6 +102,17 @@ public class DBHandler extends SQLiteOpenHelper {
         if (db!=null) {
             cursor = db.rawQuery(query,null);
 
+        }
+        return cursor;
+    }
+
+    Cursor readAllDataFlashcards(int id) {
+        String query = "Select  * from Flashcards Where Collection_ID = " + id;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,null);
         }
         return cursor;
     }
