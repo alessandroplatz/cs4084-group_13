@@ -15,9 +15,9 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
     private final RecyclerViewInterface recyclerViewInterface;
 
     private Context context;
-    private ArrayList<String> names,ids;
-
-    public CustomAdaptor(Context context,ArrayList<String>ids,ArrayList<String>names,
+    private ArrayList<String> names;
+    private ArrayList<Integer> ids;
+    public CustomAdaptor(Context context,ArrayList<Integer>ids,ArrayList<String>names,
                          RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.ids = ids;
@@ -38,6 +38,7 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
         holder.collName.setText(String.valueOf(names.get(position)));
 
 
+
     }
 
     @Override
@@ -47,25 +48,25 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-         TextView collName;
+         TextView collName,collids;
 
-        public MyViewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
-            super(itemView);
+            public MyViewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
+                super(itemView);
 
-            collName = itemView.findViewById(R.id.collName);
-            itemView.setOnClickListener(new View.OnClickListener(){
+                collName = itemView.findViewById(R.id.collName);
+                itemView.setOnClickListener(new View.OnClickListener(){
 
-                @Override
-                public void onClick(View view) {
-                    if (recyclerViewInterface!= null){
-                        int pos = getAdapterPosition();
+                    @Override
+                    public void onClick(View view) {
+                        if (recyclerViewInterface!= null){
+                            int pos = getAdapterPosition();
 
-                        if (pos != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClick(pos);
+                            if (pos != RecyclerView.NO_POSITION) {
+                                recyclerViewInterface.onItemClick(pos);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
-    }
 }

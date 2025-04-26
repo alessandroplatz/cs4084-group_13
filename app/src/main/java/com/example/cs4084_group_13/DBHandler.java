@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -58,27 +59,6 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void add(String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values =new ContentValues();
-
-        values.put(COL_1, name);
-        db.insert(TABLE_NAME,null,values);
-    }
-
-    public ArrayList<Collections> getCollections() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<Collections> collecs = new ArrayList<>();
-        Cursor cursor =db.rawQuery("Select * from " + TABLE_NAME,null);
-        if (cursor.moveToFirst()) {
-            do {
-                collecs.add(new Collections(cursor.getString(1)));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return collecs;
-    }
 
     public void addCollection(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,6 +69,23 @@ public class DBHandler extends SQLiteOpenHelper {
         if (result == -1) {
             Toast.makeText(context,"Failed to add",Toast.LENGTH_SHORT).show();
 
+        } else {
+            Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addFlashcard(String front,String back,int colID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("Front",front);
+        cv.put("Back",back);
+        cv.put("Collection_ID",colID);
+
+        long result = db.insert(TABLE_NAME_2,null,cv);
+        //put logic later to maybe handle redirect
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
         }
@@ -107,12 +104,18 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     Cursor readAllDataFlashcards(int id) {
-        String query = "Select  * from Flashcards Where Collection_ID = " + id;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db!=null) {
-            cursor = db.rawQuery(query,null);
+        SQLiteDatabase db = null;
+                Cursor cursor = null;
+        try {
+            String query = "Select  * from Flashcards Where Collection_ID = ?";
+            db = this.getReadableDatabase();
+            if (db != null) {
+                cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("DatabaseError", "Error reading data: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return cursor;
     }

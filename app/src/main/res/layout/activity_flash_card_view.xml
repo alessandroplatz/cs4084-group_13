@@ -2,10 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/flashcardV"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FlashCardView">
+
+
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_collections_button"
+        android:foreground="@drawable/add_plus"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:contentDescription="Add Flashcards Button"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="16dp"/>
+
 
     <FrameLayout
         android:id="@+id/frameLayout"

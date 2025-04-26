@@ -22,7 +22,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecyclerViewInterface{
 
     DBHandler db;
-    ArrayList<String> names,ids;
+    ArrayList<String> names;
+    ArrayList<Integer> ids;
     RecyclerView recyclerView;
     CustomAdaptor customAdaptor;
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         } else {
             while (cursor.moveToNext()) {
                 String s = cursor.getString(0);
-                ids.add(cursor.getString(0));
+                ids.add(cursor.getInt(0));
                 names.add(cursor.getString(1));
             }
         }
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(MainActivity.this, FlashCardView.class);
+        intent.putExtra("collection_id",ids.get(position));
+        intent.putExtra("collection_name",names.get(position));
         startActivity(intent);
     }
 }
