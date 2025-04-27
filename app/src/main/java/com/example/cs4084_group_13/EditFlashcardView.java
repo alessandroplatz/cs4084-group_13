@@ -26,7 +26,7 @@ public class EditFlashcardView extends AppCompatActivity {
         Intent intent = getIntent();
         int colid = intent.getIntExtra("collection_id",0);
         int flashcardid = intent.getIntExtra("flashcard_id",0);
-        String colname = intent.getStringExtra("colName");
+        String colname = intent.getStringExtra("collection_name");
         String front = intent.getStringExtra("front");
         String back = intent.getStringExtra("back");
 

@@ -106,4 +106,9 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         intent.putExtra("collection_name",colName);
         startActivity(intent);
     }
+
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
 }

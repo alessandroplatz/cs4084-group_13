@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
 
 
+
             db = new DBHandler(MainActivity.this);
             names = new ArrayList<>();
             ids = new ArrayList<>();
@@ -94,6 +95,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         Intent intent = new Intent(MainActivity.this, FlashCardView.class);
         intent.putExtra("collection_id",ids.get(position));
         intent.putExtra("collection_name",names.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        Intent intent = new Intent(MainActivity.this,EditCollectionView.class);
+        intent.putExtra("collection_name",names.get(position));
+        intent.putExtra("collection_id",ids.get(position));
         startActivity(intent);
     }
 }

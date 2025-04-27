@@ -1,0 +1,81 @@
+package com.example.cs4084_group_13;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class EditCollectionView extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_edit_collection_view);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        Intent intent = getIntent();
+        EditText nameField = findViewById(R.id.enterNameInput);
+        nameField.setText(intent.getStringExtra("collection_name"));
+        Button addBut = findViewById(R.id.add_button);
+        ImageButton delBut = findViewById(R.id.deletebutt);
+        LinearLayout confirmbox = findViewById(R.id.confirmbox);
+        Button yesbut = findViewById(R.id.yesbut);
+        Button nobut = findViewById(R.id.nobut);
+
+        nobut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmbox.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        yesbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(EditCollectionView.this,MainActivity.class);
+                DBHandler db = new DBHandler(EditCollectionView.this);
+                db.deleteCollection(intent.getIntExtra("collection_id",0));
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+                finish();
+            }
+        });
+
+        delBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmbox.setVisibility(View.VISIBLE);
+            }
+        });
+
+        addBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(EditCollectionView.this,MainActivity.class);
+                DBHandler db = new DBHandler(EditCollectionView.this);
+                db.editCollection(nameField.getText().toString().trim(),intent.getIntExtra("collection_id",0));
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+                finish();
+            }
+        });
+
+
+
+
+    }
+}

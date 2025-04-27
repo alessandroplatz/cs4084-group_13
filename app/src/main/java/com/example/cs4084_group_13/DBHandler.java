@@ -74,6 +74,33 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteCollection(int colID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        int result = db.delete(TABLE_NAME,"Collection_ID = ?",new String[]{String.valueOf(colID)});
+
+        if (result == 0) {
+            Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,"Deleted Succesfully",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void editCollection(String name,int colID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COL_1,name);
+        int result = db.update(TABLE_NAME,cv,"Collection_ID = ?",new String[] {String.valueOf(colID)});
+
+        if (result == -1) {
+            Toast.makeText(context, "Failed to Update", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,"Updated Succesfully",Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void addFlashcard(String front,String back,int colID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
