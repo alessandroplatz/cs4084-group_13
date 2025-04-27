@@ -42,7 +42,9 @@ public class AddFlashCardView extends AppCompatActivity {
                     Intent intent = new Intent(AddFlashCardView.this, FlashCardView.class);
                     intent.putExtra("collection_id",colID);
                     intent.putExtra("collection_name",colName);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                 }
             });
 

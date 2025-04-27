@@ -120,6 +120,36 @@ public class DBHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void updateFlashcard(int flashcardID,String front,String back,int colID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("Front",front);
+        cv.put("Back",back);
+        cv.put("Collection_ID",colID);
+
+        int result = db.update(TABLE_NAME_2,cv,"Flashcard_ID = ?",new String[]{String.valueOf(flashcardID)});
+
+        if (result == -1) {
+            Toast.makeText(context, "Failed to Update", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,"Updated Succesfully",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteFlashcard(int flashcardID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        int result = db.delete(TABLE_NAME_2,"Flashcard_ID = ?",new String[]{String.valueOf(flashcardID)});
+
+        if (result == 0) {
+            Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,"Deleted Succesfully",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
 }

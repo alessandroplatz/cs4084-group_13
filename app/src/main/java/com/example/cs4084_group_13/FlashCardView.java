@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -40,10 +41,13 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         Button addButton = findViewById(R.id.button3);
         RecyclerViewInterface recyclerViewInterface;
         addButton.bringToFront();
+        TextView colltitle = findViewById(R.id.TitleV);
 
         intent = getIntent();
         colID = intent.getIntExtra("collection_id",0);
         colName = intent.getStringExtra("collection_name");
+
+        colltitle.setText(colName + "\n Flashcards");
 
 
 
@@ -94,7 +98,12 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(FlashCardView.this, FlashCardView.class);
+        Intent intent = new Intent(FlashCardView.this, EditFlashcardView.class);
+        intent.putExtra("front",fronts.get(position));
+        intent.putExtra("back",backs.get(position));
+        intent.putExtra("collection_id",colID);
+        intent.putExtra("flashcard_id",ids.get(position));
+        intent.putExtra("collection_name",colName);
         startActivity(intent);
     }
 }
