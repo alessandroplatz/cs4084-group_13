@@ -69,7 +69,7 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         storeDataInArrays(colID);
         adaptorForFlashcard = new AdaptorForFlashcard(this,ids,fronts,backs,colids,this);
         recyclerView.setAdapter(adaptorForFlashcard);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.flashcardV), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
