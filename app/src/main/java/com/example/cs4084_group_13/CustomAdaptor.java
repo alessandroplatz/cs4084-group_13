@@ -1,12 +1,15 @@
 package com.example.cs4084_group_13;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -79,6 +82,24 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
                             }
                         }
                         return true;
+                    }
+                });
+
+                itemView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        ConstraintLayout csl = view.findViewById(R.id.CSL);
+
+                        switch (motionEvent.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                csl.setBackgroundColor(Color.GRAY);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                            case MotionEvent.ACTION_CANCEL:
+                                csl.setBackgroundColor(Color.TRANSPARENT);
+                                break;
+                        }
+                        return false;
                     }
                 });
             }

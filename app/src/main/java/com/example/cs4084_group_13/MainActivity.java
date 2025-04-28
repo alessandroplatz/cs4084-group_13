@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -42,7 +44,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
 
 
-
+            addButton.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            addButton.setBackgroundResource(R.drawable.add_button_clicked);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
+                            addButton.setBackgroundResource(R.drawable.add_collections_button);
+                    }
+                    return false;
+                }
+            });
 
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                     startActivity(intent);
                 }
             });
+
+
 
 
 

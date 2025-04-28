@@ -2,6 +2,7 @@ package com.example.cs4084_group_13;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +41,10 @@ public class EditCollectionView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 confirmbox.setVisibility(View.INVISIBLE);
+                delBut.setEnabled(true);
+                nameField.setEnabled(true);
+                addBut.setEnabled(true);
+                delBut.setBackgroundResource(R.drawable.circle_deletebutton);
             }
         });
 
@@ -55,10 +60,30 @@ public class EditCollectionView extends AppCompatActivity {
             }
         });
 
+        delBut.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        delBut.setBackgroundResource(R.drawable.onclickdelete);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        delBut.setBackgroundResource(R.drawable.circle_deletebutton);
+                        break;
+                }
+                return false;
+            }
+        });
+
         delBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmbox.setVisibility(View.VISIBLE);
+                delBut.setEnabled(false);
+                nameField.setEnabled(false);
+                addBut.setEnabled(false);
+                delBut.setBackgroundResource(R.drawable.onclickdelete);
             }
         });
 

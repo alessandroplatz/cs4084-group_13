@@ -13,14 +13,16 @@
         android:layout_height="wrap_content"
         android:background="@drawable/add_collections_button"
         android:foreground="@drawable/add_plus"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+
         android:clickable="true"
         android:contentDescription="Add Collection Button"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginBottom="16dp"/>
+
+
+
 
     <FrameLayout
         android:id="@+id/frameLayout"
