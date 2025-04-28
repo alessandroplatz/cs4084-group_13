@@ -43,12 +43,23 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         RecyclerViewInterface recyclerViewInterface;
         addButton.bringToFront();
         TextView colltitle = findViewById(R.id.TitleV);
+        Button testBut = findViewById(R.id.butBT);
 
         intent = getIntent();
         colID = intent.getIntExtra("collection_id",0);
         colName = intent.getStringExtra("collection_name");
 
         colltitle.setText(colName + "\n Flashcards");
+
+        testBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FlashCardView.this, FlashcardTestView.class);
+                intent.putExtra("collection_id",colID);
+                intent.putExtra("collection_name",colName);
+                startActivity(intent);
+            }
+        });
 
 
         addButton.setOnTouchListener(new View.OnTouchListener() {

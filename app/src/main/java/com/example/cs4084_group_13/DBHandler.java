@@ -27,6 +27,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COL_2 = "Back";
     private static final String FK_Col = "Collection_ID";
     private static final String TABLE_NAME_2 = "Flashcards";
+    private static final String TABLE_NAME_3 = "Test_History";
+    private static final String TABLE_NAME_4 = "Test_Mistakes";
 
 
 
@@ -48,8 +50,26 @@ public class DBHandler extends SQLiteOpenHelper {
                 "Front Text," +
                 "Back Text," +
                 "Collection_ID INTEGER," +
-                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID))";
+                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID) ON DELETE CASCADE)";
         db.execSQL(query2);
+
+        String query3 = "Create table Test_History(" +
+                "Test_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Score INTEGER," +
+                "Date_Of_Test DATETIME," +
+                "Total_Questions INTEGER," +
+                "Time_Taken INTEGER," +
+                "Collection_ID INTEGER," +
+                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID))";
+        db.execSQL(query3);
+
+        String query4 = "Create table Test_Mistakes(" +
+                "Mistake_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Test_ID INTEGER," +
+                "Flashcard_ID INTEGER," +
+                "FOREIGN KEY(Test_ID) REFERENCES Test_History(Test_ID), " +
+                "FOREIGN KEY(Flashcard_ID) REFERENCES Flashcards(Flashcard_ID))";
+        db.execSQL(query4);
     }
 
     @Override
@@ -175,6 +195,40 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Deleted Succesfully",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public ArrayList<Flashcard> getFlashcardsForTest(int colid) {
+        ArrayList<Flashcard> flashcards = new ArrayList<>();
+        String query = "Select * " +
+                "from Flashcards " +
+                "where Collection_id = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,new String[]{String.valueOf(colid)});
+
+        }
+
+
+        if (cursor.getCount() ==0) {
+            cursor.close();
+            db.close();
+            return flashcards;
+        } else {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                String front = cursor.getString(1);
+                String back = cursor.getString(2);
+                int coliddb = cursor.getInt(3);
+                flashcards.add(new Flashcard(front,back,id,coliddb));
+            }
+        }
+
+
+        cursor.close();
+        db.close();
+        return flashcards;
     }
 
 

@@ -13,12 +13,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHolder> {
     private final RecyclerViewInterface recyclerViewInterface;
 
     private Context context;
     private ArrayList<String> names;
+
     private ArrayList<Integer> ids;
     public CustomAdaptor(Context context,ArrayList<Integer>ids,ArrayList<String>names,
                          RecyclerViewInterface recyclerViewInterface) {
