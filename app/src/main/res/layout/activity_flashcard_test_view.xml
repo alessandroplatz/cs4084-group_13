@@ -45,6 +45,7 @@
 
 
    <TextView
+       android:id="@+id/QuestionCountTV"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="Question. 1"
@@ -88,7 +89,7 @@
          android:layout_width="match_parent"
          android:id="@+id/answerET"
          android:layout_height="wrap_content"
-         android:text="This is where you enter text"
+         android:hint="Enter Answer here"
          android:minLines="1"
          android:inputType="textMultiLine"
          android:textSize="16dp"
@@ -104,6 +105,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="Submit"
+         android:id="@+id/subBut"
          android:layout_marginTop="24dp"
          />
 
