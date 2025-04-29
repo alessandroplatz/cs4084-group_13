@@ -47,4 +47,8 @@ public class FlashcardTestView extends AppCompatActivity {
             }
         }.start();
     }
+
+    public void testStart() {
+
+    }
 }
