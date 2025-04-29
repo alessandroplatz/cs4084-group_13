@@ -3,6 +3,7 @@ package com.example.cs4084_group_13;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
@@ -50,6 +55,22 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         colName = intent.getStringExtra("collection_name");
 
         colltitle.setText(colName + "\n Flashcards");
+
+        //Add toolbar
+        BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
+
+        toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if(id == R.id.Collections)
+                {
+                    Intent intent = new Intent(FlashCardView.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
 
         testBut.setOnClickListener(new View.OnClickListener() {
             @Override

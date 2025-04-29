@@ -5,12 +5,14 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
@@ -41,9 +46,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             recyclerView = findViewById(R.id.collGall);
             Button addButton = findViewById(R.id.button2);
             RecyclerViewInterface recyclerViewInterface;
+            BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
 
-
-
+            toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int id = item.getItemId();
+                    if(id == R.id.Collections)
+                    {
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    return false;
+                }
+            });
             addButton.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -66,10 +82,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                     startActivity(intent);
                 }
             });
-
-
-
-
 
 
             db = new DBHandler(MainActivity.this);
