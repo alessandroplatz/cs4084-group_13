@@ -256,8 +256,16 @@ public class FlashcardTestView extends AppCompatActivity {
                     }
                 });
 
-
-
+                reviewansbut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent1 = new Intent(FlashcardTestView.this,ReviewAnswers.class);
+                        Bundle b = new Bundle();
+                        b.putSerializable("key", answers);
+                        intent1.putExtra("answers", b);
+                        startActivity(intent1);
+                    }
+                });
 
                 answerbox.setVisibility(TextView.VISIBLE);
 
