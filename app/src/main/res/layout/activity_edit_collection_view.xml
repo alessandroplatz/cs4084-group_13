@@ -53,8 +53,8 @@
         android:padding="8dp"
         android:src="@drawable/baseline_delete_24"
         android:background="@drawable/circle_deletebutton"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/shareBut"
         app:layout_constraintTop_toBottomOf="@+id/add_button"
         app:layout_constraintBottom_toBottomOf="parent"
         />
@@ -111,5 +111,18 @@
 
     </LinearLayout>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/shareBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@drawable/baseline_east_24"
+        android:background="@drawable/share_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deletebutt"
+        app:layout_constraintTop_toBottomOf="@+id/add_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

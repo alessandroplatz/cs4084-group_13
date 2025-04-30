@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -255,6 +259,60 @@ public class DBHandler extends SQLiteOpenHelper {
             Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
         }
         db.close();
+    }
+
+    public File exportCollectionToFile(int colID,String colName) {
+        File exportdir = new File(context.getExternalFilesDir(null),"exportCSV/");
+        if (!exportdir.exists()) {
+            exportdir.mkdirs();
+        }
+        File retFile = new File(exportdir, colName + ".csv");
+
+
+        String query = "Select * " +
+                "from Flashcards " +
+                "where Collection_id = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        FileWriter writer = null;
+
+        Cursor cursor = null;
+        cursor = db.rawQuery(query, new String[]{String.valueOf(colID)});
+
+
+
+        if (cursor.getCount() == 0) {
+            return retFile;
+            //maybe putLogic here to handle empty collections??
+        }
+
+            try {
+                 writer = new FileWriter(retFile);
+                writer.write("Collection," + colName+"\n");
+                writer.write("Type,Front,Back\n");
+
+
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(0);
+                    String front = cursor.getString(1);
+                    String back = cursor.getString(2);
+                    writer.write("Flashcard," + front + "," + back+"\n");
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }  finally {
+                if (writer!= null) {
+                    try{
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+            return retFile;
+
     }
 
 
