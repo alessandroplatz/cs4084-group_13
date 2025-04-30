@@ -2,7 +2,9 @@ package com.example.cs4084_group_13;
 
 import androidx.annotation.NonNull;
 
-public class Flashcard {
+import java.io.Serializable;
+
+public class Flashcard implements Serializable {
 
 
     private String front;
