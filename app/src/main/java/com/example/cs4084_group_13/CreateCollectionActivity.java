@@ -32,12 +32,16 @@ public class CreateCollectionActivity extends AppCompatActivity {
             subButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DBHandler myDB = new DBHandler(CreateCollectionActivity.this);
-                    myDB.addCollection(name.getText().toString().trim());
-                    Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                    if (name.getText().toString().isEmpty()) {
+                        Toast.makeText(CreateCollectionActivity.this,"Please enter something!",Toast.LENGTH_SHORT).show();
+                    } else {
+                        DBHandler myDB = new DBHandler(CreateCollectionActivity.this);
+                        myDB.addCollection(name.getText().toString().trim());
+                        Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             });
 

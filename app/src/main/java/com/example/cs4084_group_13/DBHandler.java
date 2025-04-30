@@ -92,6 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     public void deleteCollection(int colID) {
@@ -105,6 +106,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Deleted Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     public void editCollection(String name,int colID) {
@@ -119,6 +121,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Updated Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     public void addFlashcard(String front,String back,int colID) {
@@ -136,6 +139,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     Cursor readAllData() {
@@ -147,6 +151,7 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor = db.rawQuery(query,null);
 
         }
+
         return cursor;
     }
 
@@ -182,6 +187,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Updated Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     public void deleteFlashcard(int flashcardID) {
@@ -195,6 +201,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context,"Deleted Succesfully",Toast.LENGTH_SHORT).show();
         }
+        db.close();
     }
 
     public ArrayList<Flashcard> getFlashcardsForTest(int colid) {
@@ -230,6 +237,26 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return flashcards;
     }
+
+    public void addToTestHistory(int score,String datetime,int totalQuestions,int colID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("Score",score);
+        cv.put("Date_Of_Test",datetime);
+        cv.put("Total_Questions",totalQuestions);
+        cv.put("Collection_ID",colID);
+
+        long result = db.insert(TABLE_NAME_3,null,cv);
+        //put logic later to maybe handle redirect
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context,"Added Succesfully",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+
 
 
 

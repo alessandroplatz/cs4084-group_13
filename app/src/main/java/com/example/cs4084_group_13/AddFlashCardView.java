@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,14 +38,25 @@ public class AddFlashCardView extends AppCompatActivity {
             addBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DBHandler myDB = new DBHandler(AddFlashCardView.this);
-                    myDB.addFlashcard(frontET.getText().toString().trim(),backET.getText().toString().trim(),colID);
-                    Intent intent = new Intent(AddFlashCardView.this, FlashCardView.class);
-                    intent.putExtra("collection_id",colID);
-                    intent.putExtra("collection_name",colName);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                    if (backET.getText().toString().isEmpty()&&frontET.getText().toString().isEmpty()) {
+                        Toast.makeText(AddFlashCardView.this,"Please don't Leave the Back and Front Empty!",Toast.LENGTH_SHORT).show();
+
+                    } else if (backET.getText().toString().isEmpty()) {
+
+                        Toast.makeText(AddFlashCardView.this,"Please don't Leave the Back Empty!",Toast.LENGTH_SHORT).show();
+                    } else if (frontET.getText().toString().isEmpty()) {
+
+                        Toast.makeText(AddFlashCardView.this,"Please don't Leave the Front Empty!",Toast.LENGTH_SHORT).show();
+                    } else {
+                        DBHandler myDB = new DBHandler(AddFlashCardView.this);
+                        myDB.addFlashcard(frontET.getText().toString().trim(), backET.getText().toString().trim(), colID);
+                        Intent intent = new Intent(AddFlashCardView.this, FlashCardView.class);
+                        intent.putExtra("collection_id", colID);
+                        intent.putExtra("collection_name", colName);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             });
 

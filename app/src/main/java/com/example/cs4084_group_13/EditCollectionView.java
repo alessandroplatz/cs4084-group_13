@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -90,12 +91,16 @@ public class EditCollectionView extends AppCompatActivity {
         addBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(EditCollectionView.this,MainActivity.class);
-                DBHandler db = new DBHandler(EditCollectionView.this);
-                db.editCollection(nameField.getText().toString().trim(),intent.getIntExtra("collection_id",0));
-                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent1);
-                finish();
+                if (nameField.getText().toString().isEmpty()) {
+                    Toast.makeText(EditCollectionView.this,"Please enter something!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent1 = new Intent(EditCollectionView.this, MainActivity.class);
+                    DBHandler db = new DBHandler(EditCollectionView.this);
+                    db.editCollection(nameField.getText().toString().trim(), intent.getIntExtra("collection_id", 0));
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent1);
+                    finish();
+                }
             }
         });
 

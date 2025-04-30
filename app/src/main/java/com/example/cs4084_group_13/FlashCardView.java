@@ -72,15 +72,7 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
             }
         });
 
-        testBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FlashCardView.this, FlashcardTestView.class);
-                intent.putExtra("collection_id",colID);
-                intent.putExtra("collection_name",colName);
-                startActivity(intent);
-            }
-        });
+
 
 
         addButton.setOnTouchListener(new View.OnTouchListener() {
@@ -123,6 +115,21 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         adaptorForFlashcard = new AdaptorForFlashcard(this,ids,fronts,backs,colids,this);
         recyclerView.setAdapter(adaptorForFlashcard);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+
+        testBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ids.isEmpty()) {
+                    Toast.makeText(FlashCardView.this,"Please Make a Flashcard Before Trying a Test!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(FlashCardView.this, FlashcardTestView.class);
+                    intent.putExtra("collection_id", colID);
+                    intent.putExtra("collection_name", colName);
+                    startActivity(intent);
+                }
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.flashcardV), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

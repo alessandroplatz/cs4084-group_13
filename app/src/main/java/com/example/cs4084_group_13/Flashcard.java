@@ -3,6 +3,8 @@ package com.example.cs4084_group_13;
 import androidx.annotation.NonNull;
 
 public class Flashcard {
+
+
     private String front;
     private String back;
     private int id;
@@ -14,6 +16,7 @@ public class Flashcard {
         this.id = id;
         this.colID = colID;
     }
+    //We might want to make this into its own class later but im just messing around with this constuctor as a way to store answers for the test
 
     public String getBack() {
         return back;
