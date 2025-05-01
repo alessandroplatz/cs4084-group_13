@@ -1,5 +1,6 @@
 package com.example.cs4084_group_13;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -161,6 +162,46 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         return cursor;
+    }
+
+    Cursor readAllTests() {
+        String query = "Select * from Test_History";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,null);
+
+        }
+
+        return cursor;
+    }
+
+    @SuppressLint("Range")
+    public String GetCollectionName(int colID) {
+        if (colID == 0)
+            return "Pop Quiz";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String collectionName = null;
+
+        // Query to select the collection name by Collection_ID
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + ID_COL + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(colID)});
+
+        // If data is found, get the collection name
+        if (cursor != null && cursor.moveToFirst()) {
+                collectionName = cursor.getString(cursor.getColumnIndex(COL_1));
+        }
+
+        // Close the cursor and database to prevent memory leaks
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+
+
+        return collectionName;
     }
 
     public Cursor readAllDataFlashcards(int id) {

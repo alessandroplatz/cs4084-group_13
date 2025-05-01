@@ -1,8 +1,10 @@
 package com.example.cs4084_group_13;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -10,11 +12,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class TestHistoryView extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class TestHistoryView extends AppCompatActivity implements RecyclerViewInterface {
+
+    DBHandler db;
+    ArrayList<String> name;
+    ArrayList<String> dates;
+    ArrayList<Integer> score;
+    RecyclerView recyclerView;
+    AdaptorForTest adaptorForTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +42,15 @@ public class TestHistoryView extends AppCompatActivity {
 
         BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
         toolBar.setSelectedItemId(R.id.TestHistory);
+
+        db = new DBHandler(this);
+        dates = new ArrayList<>();
+        name = new ArrayList<>();
+        score = new ArrayList<>();
+        storeDataInArrays();
+        adaptorForTest = new AdaptorForTest(this,name,score,dates,this);
+        recyclerView.setAdapter(adaptorForTest);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
         toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -48,5 +70,28 @@ public class TestHistoryView extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    void storeDataInArrays() {
+        Cursor cursor = db.readAllTests();
+        if (cursor.getCount() ==0) {
+            Toast.makeText(this,"No Tests",Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                name.add(db.GetCollectionName(cursor.getInt(2)));
+                dates.add(cursor.getString(2));
+                score.add(cursor.getInt(3)/cursor.getInt(4));
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
     }
 }
