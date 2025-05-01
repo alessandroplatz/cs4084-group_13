@@ -1,5 +1,6 @@
 package com.example.cs4084_group_13;
 
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ public class AdaptorForTest extends RecyclerView.Adapter<AdaptorForTest.MyViewHo
         this.context = context;
         this.test_name = NAME;
         this.dates = dates;
-        this.score = new ArrayList<>();
+        this.score =score;
 
         this.recyclerViewInterface =recyclerViewInterface;
     }
@@ -64,7 +65,7 @@ public class AdaptorForTest extends RecyclerView.Adapter<AdaptorForTest.MyViewHo
 
             name = itemView.findViewById(R.id.CollName);
             score = itemView.findViewById(R.id.Score);
-            date = itemView.findViewById(R.id.Score);
+            date = itemView.findViewById(R.id.date);
             square = itemView.findViewById(R.id.square);
             itemView.setOnClickListener(new View.OnClickListener(){
 

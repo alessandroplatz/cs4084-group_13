@@ -43,13 +43,18 @@ public class TestHistoryView extends AppCompatActivity implements RecyclerViewIn
         BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
         toolBar.setSelectedItemId(R.id.TestHistory);
 
+        recyclerView = findViewById(R.id.collGall);
         db = new DBHandler(this);
         dates = new ArrayList<>();
         name = new ArrayList<>();
         score = new ArrayList<>();
+
         storeDataInArrays();
+
         adaptorForTest = new AdaptorForTest(this,name,score,dates,this);
+
         recyclerView.setAdapter(adaptorForTest);
+
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
         toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -73,16 +78,20 @@ public class TestHistoryView extends AppCompatActivity implements RecyclerViewIn
     }
 
     void storeDataInArrays() {
+        name.add("nom");//db.GetCollectionName(cursor.getInt(2)));
+        dates.add("0");//cursor.getString(2));
+        score.add(0);//cursor.getInt(3));//
+        /*
         Cursor cursor = db.readAllTests();
         if (cursor.getCount() ==0) {
             Toast.makeText(this,"No Tests",Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                name.add(db.GetCollectionName(cursor.getInt(2)));
-                dates.add(cursor.getString(2));
-                score.add(cursor.getInt(3)/cursor.getInt(4));
+                name.add("nom");//db.GetCollectionName(cursor.getInt(2)));
+                dates.add("0");//cursor.getString(2));
+                score.add(0);//cursor.getInt(3));
             }
-        }
+        }*/
     }
 
     @Override

@@ -183,18 +183,12 @@ public class DBHandler extends SQLiteOpenHelper {
             return "Pop Quiz";
         SQLiteDatabase db = this.getReadableDatabase();
         String collectionName = null;
-
-        // Query to select the collection name by Collection_ID
         String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + ID_COL + " = ?";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(colID)});
-
-        // If data is found, get the collection name
         if (cursor != null && cursor.moveToFirst()) {
                 collectionName = cursor.getString(cursor.getColumnIndex(COL_1));
         }
-
-        // Close the cursor and database to prevent memory leaks
         if (cursor != null) {
             cursor.close();
         }
