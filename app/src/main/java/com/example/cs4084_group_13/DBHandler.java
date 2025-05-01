@@ -443,6 +443,33 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
+    public String getColName(int colid) {
+        String name = "";
+        String query = "Select Name " +
+                "from Collections " +
+                "where Collection_id = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,new String[]{String.valueOf(colid)});
+
+        }
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            name = cursor.getString(0);
+        } else {
+            name = "NameNotFound";
+        }
+
+
+        cursor.close();
+        db.close();
+        return name;
+    }
+
+
 
 
 

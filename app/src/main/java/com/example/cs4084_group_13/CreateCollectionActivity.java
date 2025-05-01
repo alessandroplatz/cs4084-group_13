@@ -93,7 +93,6 @@ public class CreateCollectionActivity extends AppCompatActivity {
 
                     db.importCSVToDB(file);
 
-                    // Return to MainActivity after import
                     Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
                     Toast.makeText(CreateCollectionActivity.this,"Collection Successfully Imported",Toast.LENGTH_SHORT).show();
                     finish();
@@ -107,7 +106,6 @@ public class CreateCollectionActivity extends AppCompatActivity {
     }
 
     public File convertInputStreamToFile(InputStream inputStream, String fileName, Context context) throws IOException {
-        // Create a temporary file in the app's cache directory
         File tempFile = new File(context.getCacheDir(), fileName);
         try (OutputStream outputStream = new FileOutputStream(tempFile)) {
             byte[] buffer = new byte[1024];
