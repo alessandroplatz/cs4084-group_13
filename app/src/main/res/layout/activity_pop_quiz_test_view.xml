@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FlashcardTestView">
+
+    <TextView
+        android:id="@+id/TextTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="3"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/TitleTime"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/TextTime"
+        android:text="Your Test Begins in..."
+        android:textSize="30dp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/flashcardLL"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/black"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:visibility="invisible">
+
+
+
+        <TextView
+            android:id="@+id/QuestionCountTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question. 1"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="50dp"
+            android:textAlignment="center"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question"
+            android:textSize="32dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/frontTV"
+            android:scrollbars="vertical"
+            android:layout_height="wrap_content"
+            android:text="Hello this is test text"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:minLines="5"
+            android:maxLines="5"
+            android:background="@drawable/flashcard_design"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Answer"
+            android:textSize="32dp"
+            android:layout_marginTop="50dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:id="@+id/answerET"
+            android:layout_height="wrap_content"
+            android:hint="Enter Answer here"
+            android:minLines="1"
+            android:inputType="textMultiLine"
+            android:textSize="16dp"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:background="@drawable/answerbox_rounded"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/subBut"
+            android:layout_marginTop="24dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/resultBoxLL"
+        android:orientation="vertical"
+        android:background="@drawable/result_box"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="32sp"
+            android:id="@+id/ansTV"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="Actual Answer"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/backTV"
+            android:scrollbars="vertical"
+            android:layout_height="wrap_content"
+            android:text="Hello this is test text"
+            android:textSize="24dp"
+            android:textAlignment="center"
+            android:minLines="3"
+            android:maxLines="3"
+            android:background="@drawable/flashcard_design"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="32sp"
+            android:id="@+id/YAnsTV"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="Your Answer"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"/>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/userAnsTV"
+            android:scrollbars="vertical"
+            android:layout_height="wrap_content"
+            android:text="Hello this is test text"
+            android:textSize="24dp"
+            android:textAlignment="center"
+            android:minLines="3"
+            android:maxLines="3"
+            android:background="@drawable/flashcard_design"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            />
+
+
+
+        <TextView
+            android:id="@+id/correctTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Were you correct?"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="64dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="32dp"/>
+
+        <LinearLayout
+            android:id="@+id/butbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="75dp"
+
+            android:gravity="center">
+
+
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:id="@+id/NTTbut"
+                android:layout_height="wrap_content"
+                android:text="Not this time"
+                android:minWidth="130dp"
+                android:background="@drawable/incorrect_button"
+                android:layout_marginRight="5dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/SObut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spot on!"
+                android:minWidth="130dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/correct_button"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/ResultScreen"
+        android:orientation="vertical"
+        android:background="@drawable/result_box_failure"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results"
+            android:textSize="48dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:id="@+id/highestStreakEnd"
+            android:text="Highest Streak: 10"
+            android:textSize="32dp"
+            android:textColor="@color/black"
+            android:padding="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:id="@+id/scoreEnd"
+            android:text="Score: 5"
+            android:textSize="32dp"
+            android:textColor="@color/black"
+            android:padding="20dp"
+            />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="review Answers"
+            android:textSize="32dp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/reviewanswerbut"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/butLayout"
+            android:layout_marginTop="20dp">
+
+
+            <Button
+                android:layout_width="0dp"
+                android:id="@+id/tryAgainButton"
+                android:layout_height="wrap_content"
+                android:text="Try Again"
+                android:layout_weight="1"
+                android:padding="20dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:id="@+id/backButtonEnd"
+                android:layout_weight="1"
+                android:padding="20dp"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/endTestLL"
+        android:background="@drawable/answerbox_rounded"
+        android:padding="20dp"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Your Test?"
+            android:textSize="48dp"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="20dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:id="@+id/endTestNoBut"
+                android:textSize="24dp"
+                android:layout_margin="10dp"/>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:id="@+id/endTestYesBut"
+                android:textSize="24dp"
+                android:layout_margin="10dp"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             Button addButton = findViewById(R.id.button2);
             RecyclerViewInterface recyclerViewInterface;
             BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
+            toolBar.setSelectedItemId(R.id.Collections);
 
             toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
                 @Override
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
                     if(id == R.id.Collections)
                     {
                         Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else if (id == R.id.PopQuiz) {
+                        Intent intent = new Intent(MainActivity.this, PopQuizView.class);
+                        startActivity(intent);
+                    } else if (id == R.id.TestHistory) {
+                        Intent intent = new Intent(MainActivity.this, TestHistoryView.class);
                         startActivity(intent);
                     }
                     return false;

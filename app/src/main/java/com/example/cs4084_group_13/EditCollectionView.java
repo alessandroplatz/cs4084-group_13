@@ -38,7 +38,7 @@ public class EditCollectionView extends AppCompatActivity {
         int id = intent.getIntExtra("collection_id",0);
         String name = intent.getStringExtra("collection_name");
         EditText nameField = findViewById(R.id.enterNameInput);
-        nameField.setText(intent.getStringExtra(name));
+        nameField.setText(name);
         Button addBut = findViewById(R.id.add_button);
         ImageButton delBut = findViewById(R.id.deletebutt);
         LinearLayout confirmbox = findViewById(R.id.confirmbox);
@@ -115,21 +115,25 @@ public class EditCollectionView extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DBHandler db = new DBHandler(EditCollectionView.this);
-                File sharecsv = db.exportCollectionToFile(id,name);
+                if (db.readAllDataFlashcards(id).getCount() == 0) {
+                    Toast.makeText(EditCollectionView.this,"Please add a flashcard first",Toast.LENGTH_SHORT).show();
+                } else {
 
+                    File sharecsv = db.exportCollectionToFile(id, name);
+                    Uri uri = FileProvider.getUriForFile(
+                            EditCollectionView.this,
+                            "com.example.cs4084_group_13.fileprovoider",
+                            sharecsv);
 
-                Uri uri = FileProvider.getUriForFile(
-                        EditCollectionView.this,
-                        "com.example.cs4084_group_13.fileprovoider",
-                        sharecsv);
-
-                Intent intent1 = new Intent(Intent.ACTION_SEND);
-                intent1.setType("text/csv");
-                intent1.putExtra(Intent.EXTRA_STREAM,uri);
-                intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent1 = Intent.createChooser(intent1,"Share CSV File");
-                startActivity(intent1);
+                    Intent intent1 = new Intent(Intent.ACTION_SEND);
+                    intent1.setType("text/csv");
+                    intent1.putExtra(Intent.EXTRA_STREAM, uri);
+                    intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent1 = Intent.createChooser(intent1, "Share CSV File");
+                    startActivity(intent1);
+                }
             }
         });
 

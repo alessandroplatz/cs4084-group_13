@@ -7,13 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
+import com.opencsv.CSVReader;
 
 import com.google.android.material.tabs.TabLayout;
+import com.opencsv.exceptions.CsvValidationException;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -64,16 +69,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 "Total_Questions INTEGER," +
                 "Time_Taken INTEGER," +
                 "Collection_ID INTEGER," +
-                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID))";
+                "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID) ON DELETE CASCADE)";
         db.execSQL(query3);
 
-        String query4 = "Create table Test_Mistakes(" +
-                "Mistake_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Test_ID INTEGER," +
-                "Flashcard_ID INTEGER," +
-                "FOREIGN KEY(Test_ID) REFERENCES Test_History(Test_ID), " +
-                "FOREIGN KEY(Flashcard_ID) REFERENCES Flashcards(Flashcard_ID))";
-        db.execSQL(query4);
     }
 
     @Override
@@ -81,6 +79,12 @@ public class DBHandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_2);
         onCreate(sqLiteDatabase);
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
 
@@ -159,7 +163,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    Cursor readAllDataFlashcards(int id) {
+    public Cursor readAllDataFlashcards(int id) {
         SQLiteDatabase db = null;
                 Cursor cursor = null;
         try {
@@ -287,14 +291,17 @@ public class DBHandler extends SQLiteOpenHelper {
 
             try {
                  writer = new FileWriter(retFile);
-                writer.write("Collection," + colName+"\n");
                 writer.write("Type,Front,Back\n");
+                colName = handleComma(colName);
+                writer.write("Collection," + colName+"\n");
+
 
 
                 while (cursor.moveToNext()) {
                     int id = cursor.getInt(0);
-                    String front = cursor.getString(1);
-                    String back = cursor.getString(2);
+                    String front = handleComma(cursor.getString(1));
+                    String back = handleComma(cursor.getString(2));
+
                     writer.write("Flashcard," + front + "," + back+"\n");
 
                 }
@@ -314,6 +321,127 @@ public class DBHandler extends SQLiteOpenHelper {
             return retFile;
 
     }
+
+
+    public void importCSVToDB(File file) {
+        try {
+            CSVReader reader = new CSVReader(new FileReader(file));
+            ContentValues cv = new ContentValues();
+            SQLiteDatabase db = this.getWritableDatabase();
+            long result = 0;
+            long colid2 = 0;
+
+
+            String[] line = reader.readNext();//handles getting to actual content
+            if (line ==null || !line[0].equals("Type")|| !line[1].equals("Front")|| !line[2].equals("Back")) {
+                Toast.makeText(context,"please dont upload files not made through the export feature",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            line = reader.readNext();
+            try {
+                cv.put("Name", line[1]);
+            } catch (UnknownError e) {
+                e.printStackTrace();
+            }
+            colid2 = db.insert(TABLE_NAME,null,cv);//adding the collection
+            cv.clear();
+
+            while ((line = reader.readNext())!=null) {
+                cv.put("Front",line[1]);
+                cv.put("Back",line[2]);
+                cv.put("Collection_ID",colid2);
+                result = db.insert(TABLE_NAME_2,null,cv);
+            }
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+    public int getMaxColID() {
+        String query = "Select MAX(Collection_ID) " +
+                "from Collections "
+                ;
+        int id = 1;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,null);
+
+        }
+
+
+        if (cursor.getCount() ==0) {
+            cursor.close();
+            db.close();
+            return 1;
+        } else {
+            while (cursor.moveToNext()) {
+                id = cursor.getInt(0)+1;
+
+            }
+            cursor.close();
+        }
+
+
+
+        db.close();
+        return id;
+    }
+
+    public String handleComma(String val) {
+        if (val == null) {
+            return "";
+        }
+
+        val = val.replace("\"","\"\"");
+        if (val.contains(",") || val.contains("\n")||val.contains("\r")) {
+            val = "\"" + val + "\"";
+        }
+        return val;
+    }
+
+    public ArrayList<Flashcard> getFlashcardsForTestMode() {
+        ArrayList<Flashcard> flashcards = new ArrayList<>();
+        String query = "Select * " +
+                "from Flashcards ";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db!=null) {
+            cursor = db.rawQuery(query,null);
+
+        }
+
+
+        if (cursor.getCount() ==0) {
+            cursor.close();
+            db.close();
+            return flashcards;
+        } else {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                String front = cursor.getString(1);
+                String back = cursor.getString(2);
+                int coliddb = cursor.getInt(3);
+                flashcards.add(new Flashcard(front,back,id,coliddb));
+            }
+        }
+
+
+        cursor.close();
+        db.close();
+        return flashcards;
+    }
+
+
 
 
 

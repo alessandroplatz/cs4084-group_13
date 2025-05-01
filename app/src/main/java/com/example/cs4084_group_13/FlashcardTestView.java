@@ -307,7 +307,7 @@ public class FlashcardTestView extends AppCompatActivity {
                     transition(answerbox, confirmBox, new Runnable() {
                         @Override
                         public void run() {
-                            subBut.setEnabled(true);
+
                         }
                     });
 
@@ -337,8 +337,7 @@ public class FlashcardTestView extends AppCompatActivity {
                     transition(confirmBox, failureBox, new Runnable() {
                         @Override
                         public void run() {
-                            SOBut.setEnabled(true);
-                            NTTbut.setEnabled(true);
+
                         }
                     });
                 }
@@ -365,8 +364,7 @@ public class FlashcardTestView extends AppCompatActivity {
                     transition(confirmBox, successBox, new Runnable() {
                         @Override
                         public void run() {
-                            SOBut.setEnabled(true);
-                            NTTbut.setEnabled(true);
+
                         }
                     });
                 }
@@ -406,6 +404,9 @@ public class FlashcardTestView extends AppCompatActivity {
                     public void run() {
                         NQBut.setEnabled(true);
                         NQFBut.setEnabled(true);
+                        subBut.setEnabled(true);
+                        SOBut.setEnabled(true);
+                        NTTbut.setEnabled(true);
                     }
                 });
             }

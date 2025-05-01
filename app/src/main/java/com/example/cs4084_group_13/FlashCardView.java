@@ -67,6 +67,12 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
                 {
                     Intent intent = new Intent(FlashCardView.this, MainActivity.class);
                     startActivity(intent);
+                } else if (id == R.id.PopQuiz) {
+                    Intent intent = new Intent(FlashCardView.this, PopQuizView.class);
+                    startActivity(intent);
+                } else if (id == R.id.TestHistory) {
+                    Intent intent = new Intent(FlashCardView.this, TestHistoryView.class);
+                    startActivity(intent);
                 }
                 return false;
             }

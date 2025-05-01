@@ -6,11 +6,11 @@
      android:icon="@drawable/baseline_collections_24"
      android:id="@+id/Collections"   />
 
-    <item android:title="Test Mode"
-     android:icon="@drawable/baseline_test_24"
-     android:id="@+id/TestMode"   />
+    <item android:title="Pop Quiz"
+     android:icon="@drawable/baseline_quiz_24"
+     android:id="@+id/PopQuiz"   />
 
-    <item android:title="Settings"
-     android:icon="@drawable/baseline_settings_24"
-     android:id="@+id/Settings"   />
+    <item android:title="Test History"
+     android:icon="@drawable/baseline_history_24"
+     android:id="@+id/TestHistory"   />
 </menu>

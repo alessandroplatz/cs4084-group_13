@@ -10,28 +10,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
-
-public class ReviewAnswers extends AppCompatActivity {
-
+public class TestHistoryView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_review_answers);
-        ArrayList<Answer> answers = (ArrayList<Answer>) ( getIntent().getBundleExtra("answers").getSerializable("key"));
+        setContentView(R.layout.activity_test_history_view);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
-
-        RecyclerView recyclerView = findViewById(R.id.collGall);
-
-
-         toolBar = findViewById(R.id.bottomNavigationView);
+        toolBar.setSelectedItemId(R.id.TestHistory);
 
         toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -39,23 +36,17 @@ public class ReviewAnswers extends AppCompatActivity {
                 int id = item.getItemId();
                 if(id == R.id.Collections)
                 {
-                    Intent intent = new Intent(ReviewAnswers.this, MainActivity.class);
+                    Intent intent = new Intent(TestHistoryView.this, MainActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.PopQuiz) {
-                    Intent intent = new Intent(ReviewAnswers.this, PopQuizView.class);
+                    Intent intent = new Intent(TestHistoryView.this, PopQuizView.class);
                     startActivity(intent);
                 } else if (id == R.id.TestHistory) {
-                    Intent intent = new Intent(ReviewAnswers.this, TestHistoryView.class);
+                    Intent intent = new Intent(TestHistoryView.this, TestHistoryView.class);
                     startActivity(intent);
                 }
                 return false;
             }
-        });
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
         });
     }
 }
