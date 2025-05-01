@@ -60,11 +60,13 @@ public class CreateCollectionActivity extends AppCompatActivity {
             importButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                     public void onClick(View view) {
+                        importButton.setEnabled(false);
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         DBHandler db = new DBHandler(CreateCollectionActivity.this);
                         intent.setType("*/*");
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                      startActivityForResult(Intent.createChooser(intent, "Choose CSV File"), 1);
+                        importButton.setEnabled(true);
                     }
                 });
 

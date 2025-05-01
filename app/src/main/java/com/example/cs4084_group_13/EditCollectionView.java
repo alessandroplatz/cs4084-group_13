@@ -3,6 +3,7 @@ package com.example.cs4084_group_13;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -115,10 +116,12 @@ public class EditCollectionView extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                shareButton.setEnabled(false);
 
                 DBHandler db = new DBHandler(EditCollectionView.this);
                 if (db.readAllDataFlashcards(id).getCount() == 0) {
                     Toast.makeText(EditCollectionView.this,"Please add a flashcard first",Toast.LENGTH_SHORT).show();
+                    shareButton.setEnabled(true);
                 } else {
 
                     File sharecsv = db.exportCollectionToFile(id, name);
@@ -133,6 +136,9 @@ public class EditCollectionView extends AppCompatActivity {
                     intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent1 = Intent.createChooser(intent1, "Share CSV File");
                     startActivity(intent1);
+                    new Handler().postDelayed(() -> {
+                        shareButton.setEnabled(true);
+                    }, 1000);
                 }
             }
         });
