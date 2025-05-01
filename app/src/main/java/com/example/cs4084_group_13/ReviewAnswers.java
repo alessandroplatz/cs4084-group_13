@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,8 +18,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
-public class ReviewAnswers extends AppCompatActivity {
+public class ReviewAnswers extends AppCompatActivity implements RecyclerViewInterface{
 
+    AdaptorForAnswers adaptorForAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,20 @@ public class ReviewAnswers extends AppCompatActivity {
         setContentView(R.layout.activity_review_answers);
         ArrayList<Answer> answers = (ArrayList<Answer>) ( getIntent().getBundleExtra("answers").getSerializable("key"));
         BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
+        ArrayList<Answer> wrong_answers = new ArrayList<>();
+        ArrayList<Answer> correct_answers = new ArrayList<>();
+        for (Answer element : answers) {
+            if (element.getCorrect()) { correct_answers.add(element);}
+            else { wrong_answers.add(element); }
+        }
+        answers.clear();
+        answers.addAll(wrong_answers);
+        answers.addAll(correct_answers);
 
         RecyclerView recyclerView = findViewById(R.id.collGall);
-
-
-         toolBar = findViewById(R.id.bottomNavigationView);
+        adaptorForAnswers = new AdaptorForAnswers(this,answers,this);
+        recyclerView.setAdapter(adaptorForAnswers);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
 
         toolBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -57,5 +68,15 @@ public class ReviewAnswers extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+
     }
 }
