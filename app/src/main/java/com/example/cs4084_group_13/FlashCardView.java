@@ -53,6 +53,7 @@ public class FlashCardView extends AppCompatActivity implements RecyclerViewInte
         intent = getIntent();
         colID = intent.getIntExtra("collection_id",0);
         colName = intent.getStringExtra("collection_name");
+        colltitle.setMovementMethod(new android.text.method.ScrollingMovementMethod());
 
         colltitle.setText(colName + "\n Flashcards");
 

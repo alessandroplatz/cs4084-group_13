@@ -78,9 +78,9 @@ public class PopQuizTestView extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        colid = intent.getIntExtra("collection_id",0);
         colname = intent.getStringExtra("collection_name");
         DBHandler db = new DBHandler(PopQuizTestView.this);
+        colid = db.getMaxColID();
         flashcards = db.getFlashcardsForTestMode();
         Collections.shuffle(flashcards);
         randflashcards = new ArrayList<>();
@@ -232,7 +232,6 @@ public class PopQuizTestView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(PopQuizTestView.this, PopQuizTestView.class);
-                intent1.putExtra("collection_id",colid);
                 finish();
                 startActivity(intent1);
             }
@@ -242,7 +241,6 @@ public class PopQuizTestView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(PopQuizTestView.this,PopQuizView.class);
-                intent1.putExtra("collection_id",colid);
                 intent1.putExtra("collection_name",colname);
                 startActivity(intent1);
             }
@@ -406,7 +404,7 @@ public class PopQuizTestView extends AppCompatActivity {
 
     public void writeToTestHistory() {
         DBHandler db = new DBHandler(this);
-        db.addToTestHistory(score,curDate,totalques,colid);
+        db.addToTestHistory(score,curDate,totalques,colid,1);
         db.close();
     }
 }

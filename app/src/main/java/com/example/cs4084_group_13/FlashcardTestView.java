@@ -422,7 +422,7 @@ public class FlashcardTestView extends AppCompatActivity {
 
             public void writeToTestHistory() {
                 DBHandler db = new DBHandler(this);
-                db.addToTestHistory(score,curDate,totalques,colid);
+                db.addToTestHistory(score,curDate,totalques,colid,0);
                 db.close();
             }
 }

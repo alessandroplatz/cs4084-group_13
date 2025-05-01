@@ -26,6 +26,8 @@
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="@id/flashcardV"
         android:id="@+id/TitleV"
+        android:maxLines="5"
+        android:scrollbars="vertical"
         />
 
     <Button

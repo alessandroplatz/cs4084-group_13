@@ -67,7 +67,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 "Score INTEGER," +
                 "Date_Of_Test DATETIME," +
                 "Total_Questions INTEGER," +
-                "Time_Taken INTEGER," +
+                "Is_Pop TINYINT," +
                 "Collection_ID INTEGER," +
                 "FOREIGN KEY(Collection_ID) REFERENCES Collections(Collection_ID) ON DELETE CASCADE)";
         db.execSQL(query3);
@@ -246,7 +246,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return flashcards;
     }
 
-    public void addToTestHistory(int score,String datetime,int totalQuestions,int colID) {
+    public void addToTestHistory(int score,String datetime,int totalQuestions,int colID,int isPop) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -254,6 +254,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put("Date_Of_Test",datetime);
         cv.put("Total_Questions",totalQuestions);
         cv.put("Collection_ID",colID);
+        cv.put("Is_Pop",isPop);
 
         long result = db.insert(TABLE_NAME_3,null,cv);
         //put logic later to maybe handle redirect
@@ -384,7 +385,7 @@ public class DBHandler extends SQLiteOpenHelper {
             return 1;
         } else {
             while (cursor.moveToNext()) {
-                id = cursor.getInt(0)+1;
+                id = cursor.getInt(0);
 
             }
             cursor.close();

@@ -50,6 +50,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:elevation="8dp"
+        android:maxLength="1000"
         />
 
     <TextView
@@ -81,6 +82,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:elevation="4dp"
+        android:maxLength="1000"
         />
 
     <Button
