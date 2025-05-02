@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
     ArrayList<Integer> ids;
     RecyclerView recyclerView;
     CustomAdaptor customAdaptor;
+    SearchHandler searchHandler;
 
 
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
 
             recyclerView = findViewById(R.id.collGall);
             Button addButton = findViewById(R.id.button2);
+            SearchView searchView = findViewById(R.id.searchView);
             RecyclerViewInterface recyclerViewInterface;
             BottomNavigationView toolBar = findViewById(R.id.bottomNavigationView);
             toolBar.setSelectedItemId(R.id.Collections);
@@ -100,6 +103,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
             recyclerView.setAdapter(customAdaptor);
             recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
 
+            searchHandler = new SearchHandler(customAdaptor, ids, names);
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchHandler.filter(newText.trim());
+                return true;
+            }
+        });
 
 
             ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
