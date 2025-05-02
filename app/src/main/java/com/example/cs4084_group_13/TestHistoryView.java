@@ -78,20 +78,22 @@ public class TestHistoryView extends AppCompatActivity implements RecyclerViewIn
     }
 
     void storeDataInArrays() {
-        name.add("nom");//db.GetCollectionName(cursor.getInt(2)));
-        dates.add("0");//cursor.getString(2));
-        score.add(0);//cursor.getInt(3));//
-        /*
         Cursor cursor = db.readAllTests();
         if (cursor.getCount() ==0) {
             Toast.makeText(this,"No Tests",Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                name.add("nom");//db.GetCollectionName(cursor.getInt(2)));
-                dates.add("0");//cursor.getString(2));
-                score.add(0);//cursor.getInt(3));
+                if(cursor.getInt(4)==0) {
+                    name.add(0, db.GetCollectionName(cursor.getInt(5)));
+                }
+                else
+                {
+                    name.add(0, "POP QUIZZ");
+                }
+                dates.add(0, cursor.getString(2));
+                score.add(0, (int)((float)cursor.getInt(1)/(float)cursor.getInt(3)*100));
             }
-        }*/
+        }
     }
 
     @Override

@@ -38,16 +38,21 @@ public class AdaptorForTest extends RecyclerView.Adapter<AdaptorForTest.MyViewHo
     @Override
     public AdaptorForTest.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.answer_row,parent,false);
+        View view = inflater.inflate(R.layout.test_row,parent,false);
         return new MyViewHolder(view,recyclerViewInterface);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        int Score = (score.get(position));
         holder.name.setText(String.valueOf(test_name.get(position)));
-        holder.score.setText(String.valueOf(score.get(position)));
+        holder.score.setText(String.valueOf(Integer.toString(Score) + "%" ));
         holder.date.setText(String.valueOf(dates.get(position)));
+        int R = (1-Score)*255/100;
+        int G = (Score)*255/100;
+        int color = (0xDD) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (0x50);
+        holder.square.setBackgroundColor(color);
     }
 
     @Override

@@ -64,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query2);
 
         String query3 = "Create table Test_History(" +
-                "Test_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Test_ID INTEGER PRIMARY KEY AUTOINCREMENT, " + /* index 0*/
                 "Score INTEGER," +
                 "Date_Of_Test DATETIME," +
                 "Total_Questions INTEGER," +
@@ -179,8 +179,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public String GetCollectionName(int colID) {
-        if (colID == 0)
-            return "Pop Quiz";
         SQLiteDatabase db = this.getReadableDatabase();
         String collectionName = null;
         String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + ID_COL + " = ?";
