@@ -88,7 +88,7 @@ public class TestHistoryView extends AppCompatActivity implements RecyclerViewIn
                 }
                 else
                 {
-                    name.add(0, "POP QUIZZ");
+                    name.add(0, "POP QUIZ");
                 }
                 dates.add(0, cursor.getString(2));
                 score.add(0, (int)((float)cursor.getInt(1)/(float)cursor.getInt(3)*100));
