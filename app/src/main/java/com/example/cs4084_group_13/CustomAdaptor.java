@@ -46,6 +46,14 @@ public class CustomAdaptor extends RecyclerView.Adapter<CustomAdaptor.MyViewHold
 
     }
 
+    public void updateData(ArrayList<Integer> newIds, ArrayList<String> newNames) {
+        this.ids.clear();
+        this.names.clear();
+        this.ids.addAll(newIds);
+        this.names.addAll(newNames);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return ids.size();
