@@ -13,7 +13,7 @@ public class SearchHandler {
                          ArrayList<Integer> originalIds,
                          ArrayList<String> originalNames) {
         this.adapter = adapter;
-        this.originalIds = new ArrayList<>(originalIds); // 创建原始数据副本
+        this.originalIds = new ArrayList<>(originalIds);
         this.originalNames = new ArrayList<>(originalNames);
     }
 
