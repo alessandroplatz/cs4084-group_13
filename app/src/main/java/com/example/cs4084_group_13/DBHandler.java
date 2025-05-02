@@ -357,7 +357,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
-    public void importCSVToDB(File file) {
+    public boolean importCSVToDB(File file) {
         try {
             CSVReader reader = new CSVReader(new FileReader(file));
             ContentValues cv = new ContentValues();
@@ -369,7 +369,7 @@ public class DBHandler extends SQLiteOpenHelper {
             String[] line = reader.readNext();//handles getting to actual content
             if (line ==null || !line[0].equals("Type")|| !line[1].equals("Front")|| !line[2].equals("Back")) {
                 Toast.makeText(context,"please dont upload files not made through the export feature",Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
             line = reader.readNext();
             try {
@@ -392,6 +392,7 @@ public class DBHandler extends SQLiteOpenHelper {
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
         }
+        return true;
     }
 
 

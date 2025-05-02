@@ -1,8 +1,11 @@
 package com.example.cs4084_group_13;
 
 
+import static android.graphics.Color.rgb;
+
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,9 +52,9 @@ public class AdaptorForTest extends RecyclerView.Adapter<AdaptorForTest.MyViewHo
         holder.name.setText(String.valueOf(test_name.get(position)));
         holder.score.setText(String.valueOf(Integer.toString(Score) + "%" ));
         holder.date.setText(String.valueOf(dates.get(position)));
-        int R = (1-Score)*255/100;
+        int R = (100-Score)*255/100;
         int G = (Score)*255/100;
-        int color = (0xDD) << 24 | (R & 0xff) << 16 | (G & 0xff) << 8 | (0x50);
+        int color = rgb(R,G,0);
         holder.square.setBackgroundColor(color);
     }
 
