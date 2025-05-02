@@ -91,10 +91,13 @@ public class CreateCollectionActivity extends AppCompatActivity {
                     File file = convertInputStreamToFile(inputStream,"import.csv",this);
 
 
-                    db.importCSVToDB(file);
+                    boolean succ = db.importCSVToDB(file);
 
                     Intent intent = new Intent(CreateCollectionActivity.this, MainActivity.class);
-                    Toast.makeText(CreateCollectionActivity.this,"Collection Successfully Imported",Toast.LENGTH_SHORT).show();
+                    if (succ) {
+                        Toast.makeText(CreateCollectionActivity.this,"Collection Successfully Imported",Toast.LENGTH_SHORT).show();
+
+                    }
                     finish();
                     startActivity(intent);
                 } catch (IOException e) {
